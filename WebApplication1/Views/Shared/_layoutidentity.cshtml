@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="https://img.icons8.com/ios-glyphs/60/000000/pot-.png" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="LEFT4CODE">
+    <title>Login - Mis Resetas</title>
+    <link href="~/lib/template/css/estilo.css" rel="stylesheet" />
+</head>
+<body class="login">
+    <div class="container sm:px-10">
+        <div class="block xl:grid grid-cols-2 gap-4">
+            <div class="hidden xl:flex flex-col min-h-screen">
+                <a href="" class="-intro-x flex items-center pt-5">
+                    <img src="https://img.icons8.com/ios-glyphs/50/000000/pot-.png"/>
+                    <span class="text-white text-lg ml-3"> Mis <span class="font-medium"> Resetas </span> </span>
+                </a>
+                <div class="my-auto">
+                    <img alt="Midone Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="~/lib/template/images/mis_recetas.jpg">
+                    <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                        Conoce más sobre  resetas
+                        <br>
+                        en Mis Resetas, Registrate.
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- END: Login Info -->
+            <!-- BEGIN: Login Form -->
+            <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                @RenderBody()
+            </div>
+            <!-- END: Login Form -->
+        </div>
+    </div>
+    <!-- BEGIN: JS Assets-->
+    <script src="~/lib/template/js/app.js"></script>
+    <!-- END: JS Assets-->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

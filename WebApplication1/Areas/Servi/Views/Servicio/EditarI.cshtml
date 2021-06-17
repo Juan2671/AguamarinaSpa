@@ -1,0 +1,167 @@
+﻿@model List<Servicio_Ingredinete>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link href="~/lib/template/css/Es.css" rel="stylesheet" />
+
+
+<div class=" w-full mt-5 box">
+    <div class="intro-y col-span-12 p-5  " id="formulario">
+        <h1 style="text-align:center">EDITAR INGREDIENTES</h1>
+
+        <!-- BEGIN: Form Layout -->
+        <div class="intro-y ">
+            @{int con = 0;}
+
+            @foreach (Servicio_Ingredinete item in Model)
+            {
+                @if (con == 0)
+                {
+
+                    <div class="form-row" id="Ingrediente">
+                        <div class="form-group col-md-6">
+                            <label></label>
+                            <select class="input  w-full border  ingrediente">
+                                <option value="@item.producto.IngredienteId">@item.producto.Nombre</option>
+
+                                @foreach (Producto ser in ViewBag.productos)
+                                {
+
+                                    @if (ser.Estado == "Disponible" && ser.IngredienteId != item.producto.IngredienteId)
+                                    {
+
+                                        <option value="@ser.IngredienteId">@ser.Nombre</option>
+
+                                    }
+                                }
+
+                            </select>
+                            @*<span asp-validation-for="@item.producto.Nombre" class="text-danger"></span>*@
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label></label>
+                            <input value="@item.cantidad" class="input w-full border cantidad" />
+                            <span asp-validation-for="@item.cantidad" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="form-row" id="Ingrediente_@item.producto.IngredienteId">
+                        <div class="form-group col-md-6">
+                            <label></label>
+                            <select class="input  w-full border  ingrediente">
+                                <option value="@item.producto.IngredienteId">@item.producto.Nombre</option>
+
+                                @foreach (Producto ser in ViewBag.productos)
+                                {
+
+                                    @if (ser.Estado == "Disponible" && ser.IngredienteId != item.producto.IngredienteId)
+                                    {
+
+                                        <option value="@ser.IngredienteId">@ser.Nombre</option>
+
+                                    }
+                                }
+
+                            </select>
+                            @*<span asp-validation-for="@item.producto.Nombre" class="text-danger"></span>*@
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label></label>
+                            <input value="@item.cantidad" class="input w-full border cantidad" />
+                            <span asp-validation-for="@item.cantidad" class="text-danger"></span>
+                        </div>
+
+                        <input type="button" onclick="eliminar(@item.producto.IngredienteId)" class="button border text-gray-700 btn-block btn-danger" value="eliminar">
+
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+
+    <input type="hidden" id="ser" value="@ViewBag.id" />
+
+    <div class="text-right col-12 mt-3">
+        <a data-id='1' class="button w-24 bg-theme-1 text-white" href="#">Adicionar</a>
+    </div>
+    <div class="text-right p-4 mt-5">
+
+        <button type="button" onclick="editar()" class="button w-100 border btn-primary text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modificar</font></font></button>
+
+
+        <br />
+
+        <a href="~/Servi/Servicio/Index">
+            <button type="button" class="button w-100 border btn-info mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Volver</font></font></button>
+        </a>
+    </div>
+    <br />
+</div>
+
+
+
+
+
+@section Scripts{
+    @*<script src="~/js/ap.js"></script>*@
+
+    <script>
+
+        function editar() {
+
+
+            let ingredientes = $(".ingrediente").map(function () {
+                return this.value;
+            }).get();
+
+            let cantidades = $(".cantidad").map(function () {
+                return this.value;
+            }).get();
+
+            let datos = new FormData();
+            datos.append("ingredientes", ingredientes.join());
+            datos.append("id", $("#ser").val());
+            datos.append("cantidades", cantidades.join());
+
+            $.ajax({
+                url: "../GuardarEditarI",
+                method: "Post",
+                data: datos,
+                contentType: false,
+                processData: false,
+            })
+
+        }
+
+    </script>
+
+    <script>
+        $(function () {
+            var Ingrediente = $('#Ingrediente').html();
+            var divContent = $('#formulario');
+            var botaoAdicionar = $('a[data-id="1"]');
+            var i = 2;
+
+            $(botaoAdicionar).click(function () {
+
+                divContent.append(`<div class="row" id="Ingrediente_${i}">
+${Ingrediente}
+<input type="button" onclick="eliminar(${i})" class="button border text-gray-700 btn-block btn-danger" value="eliminar">
+
+</div>
+`);
+                i++;
+            });
+        });
+
+        function eliminar(id) {
+
+            $("#Ingrediente_" + id).remove();
+        }
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+

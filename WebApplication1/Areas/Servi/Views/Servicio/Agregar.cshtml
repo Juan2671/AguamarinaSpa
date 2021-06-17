@@ -1,0 +1,191 @@
+﻿@model Servicio
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link href="~/lib/template/css/Es.css" rel="stylesheet" />
+
+ 
+<div class=" w-full mt-5">
+    <div class="intro-y col-span-12 ">
+
+        <form method="dialog" id="Guardar" enctype="multipart/form-data">
+
+            <div class="intro-y box p-5 form-row">
+                <div class="form-group col-md-12 text-center">
+                    <h1>Agregar Receta</h1>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="Imagen"></label>
+                    <input asp-for="Imagen" id="imagen" type="file" class="input w-full border mt-2" value="" placeholder="Imagen" />
+                    <span asp-validation-for="Imagen" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Nombre"></label>
+                    <input asp-for="Nombre" type="text" class="input w-full border mt-2" value="" placeholder="Nombre" />
+                    <span asp-validation-for="Nombre" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label asp-for="CategoriaId">Categoria Receta</label>
+
+                
+                    <select asp-for="CategoriaId" class="input  w-full border mt-2">
+                        <option>Seleccione</option>
+                        @foreach (Categoria item in Model.Categorias)
+                        {
+                           
+                            <option value="@item.CategoriaId">@item.NombreCategoria</option>
+                        }
+                    </select>
+                 
+                    <span asp-validation-for="CategoriaId" style="color: brown;"></span>
+                </div>
+
+                <div id="formulario" class="w-100">
+                    
+                    <div id="Ingrediente" class="row">
+                        <div class="form-group col-md-6">
+                            <label>Ingrediente</label>
+                            
+                            <select class="input  w-full border mt-2 ingrediente">
+                                <option>Seleccione</option>
+
+                                @foreach (Producto item in Model.Productos)
+                                {
+                                    @if (item.Estado == "Disponible") { 
+
+                                    <option value="@item.IngredienteId">@item.Nombre</option>
+
+                                    }
+                                }
+
+                            </select>
+                            
+                                <span ar="Producto.IngredienteId" style="color: brown;"></span>
+                            </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Cantidad Ingrediente</label>
+                            <input type="text" class="input w-full border mt-2 cantidad" value="" placeholder="Cantidad Ingrediente" />
+                            <span style="color: brown;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right col-12 mt-3">
+                    <a data-id='1' class="button w-24 bg-theme-1 text-white" href="#">Adicionar</a>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Estado"></label>
+                    <select asp-for="Estado" class="input  w-full border mt-2">
+                        <option>Seleccione</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Agotado">Agotado</option>
+                    </select>
+                    <span asp-validation-for="Estado" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Fecha">Fecha</label>
+                    <input asp-for="Fecha" type="text" class="input w-full border mt-2 datepicker" value="" />
+                    <span asp-validation-for="Fecha" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="Descripcion"></label>
+                    <textarea asp-for="Descripcion" type="text" class="input w-full border mt-2" value="" placeholder="Descripción"></textarea>
+                    <span asp-validation-for="Descripcion" style="color: brown;"></span>
+                </div>
+
+                <div class="text-right col-md-12">
+                    <button type="button" onclick="Cancelar()" class="button w-24 border text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cancelar</font></font></button>
+                    <button type="button" onclick="enviar()" class="button w-24 bg-theme-1 text-white"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Agregar</font></font></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/template/js/ap.js"></script>
+    <script src="~/lib/template/js/Datos.js"></script>
+
+    <script>
+        function enviar() {
+
+            let datos = $("#Guardar").serializeArray();
+
+            var res = {};
+
+            $.map(datos, function (n, i) {
+                res[n['name']] = n['value'];
+            });
+
+           
+
+            let img = $('#imagen')[0].files[0];
+
+            let form = new FormData();
+            
+            
+            form.append("servicio1", JSON.stringify(res));
+            
+            form.append("imagen",img);
+
+            $.ajax({
+
+                url: "Guardar",
+                method: "Post",
+                data: form,
+                contentType: false,
+                processData: false,
+            }).done(function (code) {
+                if (code == 0) {
+                    swal({
+                        title: "¡Aviso!",
+                        text: " error llene todos los campos ",
+                        icon: "info"
+                    })
+                }
+                else if (code == 1) {
+
+                    let ingredientes = $(".ingrediente").map(function () {
+                        return this.value;
+                    }).get();
+
+                   
+
+                    let cantidades = $(".cantidad").map(function () {
+                        return this.value;
+                    }).get();
+
+
+
+                  
+                    let datos = new FormData();
+                    datos.append("ingredientes", ingredientes.join());
+                    datos.append("cantidades", cantidades.join());
+
+                    $.ajax({
+                        url: "Ingredientes",
+                        method: "Post",
+                        data: datos,
+                        contentType: false,
+                        processData: false,
+                    })
+                    
+                }
+            });
+
+        }
+    </script>
+
+}
+
+
+

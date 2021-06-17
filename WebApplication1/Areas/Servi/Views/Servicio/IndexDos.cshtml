@@ -1,0 +1,50 @@
+﻿@model DataPaginador<Servicio>
+
+<h1 style="text-align:center">Recetas</h1>
+<br />
+
+
+@foreach (Servicio item in Model.Lista)
+{
+    @if (@item.Estado == "Disponible")
+    {
+        <div class="intro-y grid grid-col-12">
+
+            <div class="intro-y blog col-span-12 md:col-span-6 box">
+                <div class="blog__preview image-fit">
+                    <img alt="Midone Tailwind HTML Admin Template" class="rounded-t-md" src="/Uploads/@item.Imagen">
+
+                    <div class="absolute bottom-0 text-white px-5 pb-6 z-10">  <a href="" class="block font-medium text-xl mt-3">@item.Nombre</a> </div>
+                    <div class="absolute p-5 text-gray-700" text-white text-right">@item.Fecha</div>
+                </div>
+                <div class="p-5 text-gray-700"><a href="" class="block font-medium text-xl">Categoria Receta: @item.Categoria.NombreCategoria</a></div>
+
+                <div class="p-5 text-gray-700 text-justify">Descripcion:<a class="text-uppercase"> @item.Descripcion</a></div>
+
+                <div class="flex justify-center items-center ">
+                    <a type="button" class="button border  w-100 btn-danger" asp-area="Servi" asp-controller="Servicio" asp-action="Detalle" asp-route-id="@item.ResetaId">  Detalles </a>
+                </div>
+                <br />
+                <div class="px-5 pt-3 pb-5 border-t border-gray-20">
+                    <a href="https://www.contadorvisitasgratis.com" title="contador web"><img src="https://counter8.stat.ovh/private/contadorvisitasgratis.php?c=x1q9njaxy7lpj34w675k9u31cjawhxw3" border="0" title="contador web"></a>
+                </div>
+
+            </div>
+
+        </div>
+        <br />
+
+    }
+}
+<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <table class="table table-report -mt-2 xl:text-center">
+        <tbody>
+            <tr>
+                <td>
+                    <ul id="pagination">
+                        @Html.Raw(Model.Pagi_navegacion)
+                    </ul>
+                </td>
+        </tbody>
+    </table>
+</div>

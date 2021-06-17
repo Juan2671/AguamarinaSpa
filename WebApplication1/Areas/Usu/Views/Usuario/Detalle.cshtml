@@ -1,0 +1,47 @@
+﻿@model Usuarios
+<br />
+
+    <div class="col-md-12">
+            <!-- BEGIN: Form Layout -->
+        <div class="intro-y box p-5">
+            <h1 style="text-align:center">DETALLES DE USUARIO</h1>
+            <br />
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="intro-x login__input input input--lg w-full border border-gray-300 block" disabled="disabled" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" class="intro-x login__input input input--lg w-full border border-gray-300 block mt-4" disabled="disabled" placeholder="Nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido"></label>
+                <input asp-for="Apellido" class="intro-x login__input input input--lg w-full border border-gray-300 block mt-4" disabled="disabled" placeholder="Apellido" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento"></label>
+                <input asp-for="Documento" class="intro-x login__input input input--lg w-full border border-gray-300 block mt-4" disabled="disabled" placeholder="Documento" />
+                <span asp-validation-for="Documento" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Estado"></label>
+                <input asp-for="Estado" class="intro-x login__input w-full input input--lg border border-gray-300 block mt-4" disabled="disabled" placeholder="Estado" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            
+            <div class="text-right mt-5">
+                <a href="~/Usu/Usuario/Index">
+                    <button type="button" class="button w-24 border text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Volver</font></font></button>
+                </a>
+            </div>
+        </div>
+        </div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

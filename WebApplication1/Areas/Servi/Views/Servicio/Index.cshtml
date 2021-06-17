@@ -1,0 +1,107 @@
+﻿@model DataPaginador<Servicio>
+
+<h1 style="text-align:center">RECETAS</h1>
+<br />
+<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <ul class="xl:text-right">
+        <li>
+            <form method="get" action="/Servi/Servicio/Index">
+                <select class="w-30 input box mt-3 sm:mt-0 xl:text-left" name="Registros" >
+                    <option>Seleccionar</option>
+                    <option>2</option>
+                    <option>4</option>
+                    <option>6</option>
+                    <option>8</option>
+                    <option>10</option>
+                </select>
+                <input type="search" class="input w-200 box pr-10 placeholder-theme-13" placeholder="Buscar..." name="Search" />
+                <button id="buscar" type="submit" class="button w-8 xl:w-12 text-white bg-theme-1 xl:mr-2"><span class="icon"><i class="fa fa-search"></i></span></button>
+            </form>
+        </li>
+        <br />
+        <li>
+            @Html.Raw(Model.Pagi_info)
+        </li>
+    </ul>
+  
+</div>
+<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <table class="table table-report -mt-2">
+        <thead>
+            <tr>
+               
+                <th class="whitespace-no-wrap">Imagen</th>
+                <th class="text-center whitespace-no-wrap">Nombre</th>
+                <th class="text-center whitespace-no-wrap">Categoria Receta</th>
+                <th class="text-center whitespace-no-wrap">Estado</th>
+                <th class="text-center whitespace-no-wrap">Fecha</th>
+                <th class="text-center whitespace-no-wrap">Detalle</th>
+                <th class="text-center whitespace-no-wrap">Descripción</th>
+                <th class="text-center whitespace-no-wrap">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Servicio item in Model.Lista)
+            {
+                <tr>
+                    <div class="flex justify-center items-center">
+
+                        <td><img width="100" src="/Uploads/@item.Imagen" alt="Alernate Text" /></td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Categoria.NombreCategoria</td>
+
+                        <td>
+                            @if (@item.Estado == "Agotado")
+                            {
+                                <button class="flex items-center text-theme-6" onclick="Estado(@item.ResetaId)"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> @item.Estado </button>
+                            }
+                            else if (@item.Estado == "Disponible")
+                            {
+                                <button class="flex items-center mr-3" onclick="Estado(@item.ResetaId)"><i data-feather="check-square" class="w-4 h-4 mr-1"></i> @item.Estado </button>
+
+                            }
+
+                        </td>
+                        <td>@item.Fecha</td>
+
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" asp-area="Servi" asp-controller="Servicio" asp-action="Detalle" asp-route-id="@item.ResetaId"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Detalles </a>
+                            </div>
+                        </td>
+                        <td> <textarea rows="5" cols="8">@item.Descripcion</textarea></td>
+                       
+
+
+                    </div>
+                    <td class="table-report__action w-56">
+                        <div class="flex justify-center items-center">
+                            <a class="flex items-center mr-3" href="/Servi/Servicio/Editar/@item.ResetaId"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Editar </a>
+
+
+                            <button class="flex items-center text-theme-6" data-toggle="modal" data-target="#delete-confirmation-modal" onclick="Eliminar(@item.ResetaId)"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Eliminar </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <table class="table table-report -mt-2 xl:text-center">
+        <tbody>
+            <tr>
+                <td >
+                    <ul id="pagination">
+                        @Html.Raw(Model.Pagi_navegacion)
+                    </ul>
+                </td>
+        </tbody>
+    </table>
+</div>
+
+<div class="intro-x mt-5 xl:mt-8 text-center xl:text-right">
+    <a href="~/Servi/Servicio/Agregar">
+        <button class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3">Agregar</button>
+    </a>
+</div>

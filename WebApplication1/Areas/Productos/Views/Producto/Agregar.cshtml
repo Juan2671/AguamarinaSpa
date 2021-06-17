@@ -1,0 +1,69 @@
+﻿@model Producto
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link href="~/lib/template/css/Es.css" rel="stylesheet" />
+
+<div class=" w-full mt-5">
+    <div class="intro-y col-span-12 ">
+        <form method="post" action="/Productos/Producto/Guardar" enctype="multipart/form-data">
+            <!-- BEGIN: Form Layout -->
+            <div class="intro-y box p-5 form-row">
+                <div class="form-group col-md-12 text-center">
+                    <h1>Ingredientes</h1>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="Nombre"></label>
+                    <input asp-for="Nombre" type="text" class="input w-full border mt-2" value="" placeholder="Nombre" />
+                    <span asp-validation-for="Nombre" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="Estado"></label>
+                    <select asp-for="Estado" class="input  w-full border mt-2">
+                        <option>Seleccione</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Agotado">Agotado</option>
+                    </select>
+                    <span asp-validation-for="Estado" style="color: brown;"></span>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="CategoriaProductosId"></label>
+                    <select asp-for="CategoriaProductosId" class="input  w-full border mt-2">
+                        <option>Seleccione</option>
+                        @foreach (CategoriaProductos item in Model.Categorias)
+                        {
+                            <option value="@item.CategoriaProductosId">@item.NombreCategoria</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoriaProductosId" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="ImagenCarga"></label>
+                    <input asp-for="ImagenCarga" type="file" class="input w-full border mt-2" value="" placeholder="Imagen" />
+                    <span asp-validation-for="ImagenCarga" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="Descripcion"></label>
+                    <textarea asp-for="Descripcion" type="text"  class="input w-full border mt-2" value="" placeholder="Descripción"></textarea>
+                    <span asp-validation-for="Descripcion" style="color: brown;"></span>
+                </div>
+
+
+
+
+                <div class="text-right col-md-12">
+                    <button type="button" onclick="CancelarProducto()" class="button w-24 border text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cancelar</font></font></button>
+                    <button type="submit" class="button w-24 bg-theme-1 text-white"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Agregar</font></font></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/template/js/Datos.js"></script>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,104 @@
+﻿@model Servicio
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link href="~/lib/template/css/Es.css" rel="stylesheet" />
+
+<div class=" w-full mt-5">
+    <div class="intro-y col-span-12 ">
+
+        <form method="post" asp-area="Servi" asp-controller="Servicio" asp-action="GuardarEditar" enctype="multipart/form-data">
+
+            <div class="intro-y box p-5 form-row">
+                <div class="form-group col-md-12 text-center">
+                    <h1>EDITAR RECETAS</h1>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="ImagenCarga"></label>
+                    <img width="100" src="/Uploads/@Model.Imagen" alt="Alernate Text" />
+                    <input asp-for="ImagenCarga" id="imagen" type="file" class="input w-full border mt-2" value="" placeholder="Imagen" />
+                    <span asp-validation-for="ImagenCarga" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Nombre"></label>
+                    <input asp-for="Nombre" type="text" required class="input w-full border mt-2" value="@Model.Nombre" placeholder="Nombre" />
+                    <span asp-validation-for="Nombre" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-6">
+                    <label asp-for="CategoriaId">Categoria Receta</label>
+
+                    <select asp-for="CategoriaId" class="input  w-full border mt-2" required>
+                        <option value="@Model.Categoria.CategoriaId">@Model.Categoria.NombreCategoria</option>
+                        @foreach (Categoria item in Model.Categorias)
+                        {
+                            @if (item.CategoriaId != Model.Categoria.CategoriaId)
+                            {
+                                <option value="@item.CategoriaId">@item.NombreCategoria</option>
+                            }
+
+                        }
+                    </select>
+
+                    <span asp-validation-for="CategoriaId" style="color: brown;"></span>
+                </div>
+
+                <div class="text-right col-12 mt-3">
+                    <a class="button w-24 bg-theme-1 text-white" asp-area="Servi" asp-controller="Servicio" asp-action="EditarI" asp-route-id="@Model.ResetaId">EditarIngrediente</a>
+                </div>
+
+                <input type="hidden" asp-for="ResetaId" value="@Model.ResetaId" />
+                @*<div class="text-right col-12 mt-3">
+                    <a data-id='1' class="button w-24 bg-theme-1 text-white" href="#">Adicionar</a>
+                </div>*@
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Estado"></label>
+                    <select asp-for="Estado" class="input  w-full border mt-2">
+                        <option value="@Model.Estado">@Model.Estado</option>
+                        @if (Model.Estado == "Disponible")
+                        {
+                            <option value="Agotado">Agotado</option>
+                        }
+                        else
+                        {
+                            <option value="Disponible">Disponible</option>
+                        }
+
+
+                    </select>
+                    <span asp-validation-for="Estado" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Fecha">Fecha</label>
+                    <input asp-for="Fecha" type="date" class="input w-full border mt-2 " value="@Model.Fecha.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Fecha" style="color: brown;"></span>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label asp-for="Descripcion"></label>
+                    <textarea asp-for="Descripcion" type="text" class="input w-full border mt-2" value="@Model.Descripcion" placeholder="Descripción"></textarea>
+                    <span asp-validation-for="Descripcion" style="color: brown;"></span>
+                </div>
+                <div class="text-right mt-5">
+                    <a href="~/Servi/Servicio/Index" class="button w-24 border text-gray-700 mr-1">
+                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cancelar</font></font>
+                    </a>
+
+                    <button type="submit" class="button w-24 bg-theme-1 text-white"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Modificar</font></font></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/template/js/ap.js"></script>
+    <script src="~/js/modal.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

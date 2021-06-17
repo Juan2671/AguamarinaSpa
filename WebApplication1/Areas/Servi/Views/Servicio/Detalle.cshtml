@@ -1,0 +1,38 @@
+﻿@model List<Servicio_Ingredinete>
+<br />
+
+<div class="row">
+    <!-- BEGIN: Form Layout -->
+    <h1 style="text-align:center">DETALLES DE RECETAS</h1>
+    @foreach (Servicio_Ingredinete item in Model)
+    {
+        <div class="intro-y box p-5">
+
+            <br />
+
+            <div class="form-group col-4">
+                <label></label>
+                <input value="@item.producto.Nombre" class="intro-x login__input input input--lg w-full border border-gray-300 block" disabled="disabled" placeholder="Ingrediente" />
+                <span asp-validation-for="@item.producto.Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group clo-4">
+                <label></label>
+                <input value="@item.cantidad" class="intro-x login__input input input--lg w-full border border-gray-300 block mt-4" disabled="disabled" placeholder="Nombre" />
+                <span asp-validation-for="@item.cantidad" class="text-danger"></span>
+            </div>
+
+
+
+        </div>
+    }
+    <div class="text-right mt-5">
+        <a href="~/Servi/Servicio/Index">
+            <button type="button" class="button w-100 border text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Volver</font></font></button>
+        </a>
+    </div>
+</div>
+        
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

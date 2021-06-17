@@ -1,0 +1,35 @@
+﻿.cuerpo{
+    background-color: #8a8686;
+}
+.side-menu__icon, .side-menu__title {
+    color: black;
+}
+.side-menu__icon i{
+    color: black;
+}
+.login {
+    color: aqua;
+}
+#pagination li {
+    display: inline;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+#pagination numeros {
+    display: inline;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#buscar {
+    position: relative;
+    left: -40px;
+}
+a:hover{
+    text-decoration: none;
+}
+
+
+#datosProductos {
+    background-color:#8a8686;
+}

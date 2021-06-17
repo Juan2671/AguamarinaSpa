@@ -1,0 +1,34 @@
+﻿@model Categoria
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link href="~/lib/template/css/Es.css" rel="stylesheet" />
+
+<div class=" w-full mt-5">
+    <div class="intro-y col-span-12 ">
+
+        <form method="post" action="/Catego/Categoria/Guardar" enctype="multipart/form-data">
+            <!-- BEGIN: Form Layout -->
+            <div class="intro-y box p-5 form-row">
+                <div class="form-group col-md-12 text-center">
+                    <h1>Agregar Categoria</h1>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="NombreCategoria"></label>
+                    <input asp-for="NombreCategoria" type="text" class="input w-full border mt-2" value="" placeholder="Nombre" />
+                    <span asp-validation-for="NombreCategoria" style="color: brown;"></span>
+                </div>
+                <div class="text-right col-md-12">
+                    <button type="button" onclick="CancelarCatego()" class="button w-24 border text-gray-700 mr-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cancelar</font></font></button>
+                    <button type="submit" class="button w-24 bg-theme-1 text-white"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Agregar</font></font></button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/template/js/Datos.js"></script>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
